@@ -11,6 +11,8 @@ dotenv.config({path: './config/config.env'})
 connectDB()
 
 // Route files
+const auth = require('./routes/auth')
+
 const app = express()
 
 // Dev logging middleware
@@ -19,7 +21,7 @@ if(process.env.NODE_ENV === 'development') {
 }
 
 // Mount routers
-
+app.use('/api/v1/auth', auth)
 
 const PORT = process.env.PORT || 5000
 
