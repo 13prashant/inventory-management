@@ -4,13 +4,15 @@ const { getEmployees, createEmployee, getEmployee, updateEmployee, deleteEmploye
 
 const router = express.Router()
 
+const {protect} = require('../middlewares/auth')
+
 router.route('/')
     .get(getEmployees)
-    .post(createEmployee)
+    .post(protect, createEmployee)
 
 router.route('/:id')
     .get(getEmployee)
-    .put(updateEmployee)
-    .delete(deleteEmployee)
+    .put(protect, updateEmployee)
+    .delete(protect, deleteEmployee)
 
 module.exports = router
