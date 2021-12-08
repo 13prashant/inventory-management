@@ -14,6 +14,7 @@ connectDB()
 
 // Route files
 const auth = require('./routes/auth')
+const employees = require('./routes/employees')
 
 const app = express()
 
@@ -30,6 +31,7 @@ if(process.env.NODE_ENV === 'development') {
 
 // Mount routers
 app.use('/api/v1/auth', auth)
+app.use('/api/v1/employees', employees)
 
 app.use(errorHandler)
 
