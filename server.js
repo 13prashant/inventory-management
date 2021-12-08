@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 const morgan = require('morgan')
 const colors = require('colors')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const errorHandler = require('./middlewares/error')
 const connectDB = require('./config/db')
 
@@ -28,6 +29,9 @@ app.use(cookieParser())
 if(process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
 }
+
+// Enable CORS
+app.use(cors())
 
 // Mount routers
 app.use('/api/v1/auth', auth)

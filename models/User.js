@@ -30,8 +30,6 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please add shop address']
     },
-    resetPasswordToken: String,
-    resetPasswordExpire: Date,
     createdAt: {
         type: Date,
         default: Date.now
