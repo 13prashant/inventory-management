@@ -78,7 +78,7 @@ const sendTokenResponse = (user, statusCode, res) => {
     res
         .status(statusCode)
         .cookie('token', token, options)
-        .json({success: true, token})
+        .json({success: true, role: user.role, token})
 }
 
 // @desc        Get current logged in user
@@ -90,5 +90,18 @@ exports.getMe = asyncHandler(async (req, res, next) => {
     res.status(200).json({
         success: true,
         data: user
+    })
+})
+
+// @desc        Get all employees associated with user
+// @route       GET /api/v1/auth/employees
+// @access      Private
+exports.getEmployees = asyncHandler(async (req, res, next) => {
+    const user = await User.findById(req.user.id).populate('employees')
+
+    res.status(200).json({
+        success: true,
+        count: user.employees.length,
+        data: user.employees
     })
 })

@@ -6,7 +6,10 @@ const Employee = require('../models/Employee')
 // @route       GET /api/v1/employees
 // @access      Public
 exports.getEmployees = asyncHandler(async (req, res, next) => {
-    const employees = await Employee.find()
+    const employees = await Employee.find().populate({
+        path: 'employer',
+        select: 'shop_name shop_address'
+    })
 
     res.status(200).json({ success: true, count: employees.length, data: employees })
 })
