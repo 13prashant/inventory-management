@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken')
 const asyncHandler = require('./async')
 const ErrorResponse = require('../utils/errorResponse')
 const User = require('../models/User')
+const Employee = require('../models/Employee')
 
 // Protect routes
 exports.protect = asyncHandler(async (req, res, next) => {
@@ -29,7 +30,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
         console.log(decoded)
 
-        req.user = await User.findById(decoded.id)
+        req.user = await User.findById(decoded.id) || await Employee.findById(decoded.id)
 
         next()
     } catch (error) {
