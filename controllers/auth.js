@@ -1,6 +1,7 @@
 const asyncHandler = require('../middlewares/async')
 const ErrorResponse = require('../utils/errorResponse')
 const User = require('../models/User')
+const Employee = require('../models/Employee')
 
 // @desc        Register user
 // @route       POST /api/v1/auth/register
@@ -20,7 +21,6 @@ exports.register = asyncHandler(async (req, res, next) => {
     sendTokenResponse(user, 200, res)
 })
 
-
 // @desc        Login user
 // @route       POST /api/v1/auth/login
 // @access      Public
@@ -36,7 +36,18 @@ exports.login = asyncHandler(async (req, res, next) => {
     const user = await User.findOne({email}).select('+password')
 
     if(!user) {
-        return next(new ErrorResponse('Invalid credentials', 401))
+        // Check for employee
+        const employee = await Employee.findOne({email}).select('+password')
+        if(!employee) {
+            return next(new ErrorResponse('Invalid credentials', 401))
+        }
+        // Check if password matches
+        const isMatch = await employee.matchPassword(password)
+        if(!isMatch) {
+            return next(new ErrorResponse('Invalid credentials', 401))
+        }
+
+        return sendTokenResponse(employee, 200, res)
     }
 
     // Check if password matches

@@ -33,7 +33,11 @@ const UserSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    role: {
+        type: String,
+        default: 'admin'
+    },
 })
 
 // Encrypt password using bcrypt

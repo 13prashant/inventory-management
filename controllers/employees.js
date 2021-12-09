@@ -28,6 +28,9 @@ exports.getEmployee = asyncHandler(async (req, res, next) => {
 // @route       POST /api/v1/employees
 // @access      Private
 exports.createEmployee = asyncHandler(async (req, res, next) => {
+    // Add employer to req.body
+    req.body.employer = req.user.id
+
     const employee = await Employee.create(req.body)
 
     res.status(201).json({
