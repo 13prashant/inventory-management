@@ -18,7 +18,10 @@ exports.getProducts = asyncHandler(async (req, res, next) => {
 // @route       GET /api/v1/products/:id
 // @access      Public
 exports.getProduct = asyncHandler(async (req, res, next) => {
-    const product = await Product.findById(req.params.id)
+    const product = await Product.findById(req.params.id).populate({
+        path: 'owner',
+        select: 'shop_name shop_address',
+    })
 
     if (!product) {
         return next(new ErrorResponse(`Resource not found with the id of ${req.params.id}!`, 404))
