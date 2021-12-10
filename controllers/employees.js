@@ -43,7 +43,7 @@ exports.createEmployee = asyncHandler(async (req, res, next) => {
 })
 
 // @desc        Update employee
-// @route       PUT /api/v1/employee/:id
+// @route       PUT /api/v1/employees/:id
 // @access      Private
 exports.updateEmployee = asyncHandler(async (req, res, next) => {
     const employee = await Employee.findByIdAndUpdate(req.params.id, req.body, {

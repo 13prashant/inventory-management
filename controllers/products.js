@@ -48,7 +48,7 @@ exports.createProduct = asyncHandler(async (req, res, next) => {
 })
 
 // @desc        Update product
-// @route       PUT /api/v1/product/:id
+// @route       PUT /api/v1/products/:id
 // @access      Private
 exports.updateProduct = asyncHandler(async (req, res, next) => {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, {

@@ -13,6 +13,10 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Please add price for single item']
     },
+    stock_up: {
+        type: Number,
+        default: 0
+    },
     createdAt: {
         type: Date,
         default: Date.now
