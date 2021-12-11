@@ -7,7 +7,7 @@ const router = express.Router()
 const {protect, authorize} = require('../middlewares/auth')
 
 router.route('/')
-    .get(getProducts)
+    // .get(getProducts)
     .post(protect, authorize('admin', 'employee'), createProduct)
 
 router.route('/:id')

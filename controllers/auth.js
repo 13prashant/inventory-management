@@ -143,3 +143,26 @@ exports.getEmployees = asyncHandler(async (req, res, next) => {
         data: user.employees
     })
 })
+
+// @desc        Get all products associated with user/shop
+// @route       GET /api/v1/auth/products
+// @access      Private
+exports.getproducts = asyncHandler(async (req, res, next) => {
+    let user
+
+    if(req.user.role === 'employee') {
+        // Find employee
+        const employee = await Employee.findById(req.user.id)
+        // Find employer's id
+        const employerId = employee.employer.toString()
+        user = await User.findById(employerId).populate('products')
+    } else {
+        user = await User.findById(req.user.id).populate('products')
+    }
+
+    res.status(200).json({
+        success: true,
+        count: user.products.length,
+        data: user.products
+    })
+})

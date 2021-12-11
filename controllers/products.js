@@ -5,21 +5,21 @@ const Product = require('../models/Product')
 // @desc        Get all products
 // @route       GET /api/v1/products
 // @access      Public
-exports.getProducts = asyncHandler(async (req, res, next) => {
-    const products = await Product.find().populate({
-        path: 'owner',
-        select: 'shop_name shop_address',
-    })
+// exports.getProducts = asyncHandler(async (req, res, next) => {
+//     const products = await Product.find().populate({
+//         path: 'shop',
+//         select: 'shop_name shop_address',
+//     })
 
-    res.status(200).json({ success: true, count: products.length, data: products })
-})
+//     res.status(200).json({ success: true, count: products.length, data: products })
+// })
 
 // @desc        Get single product
 // @route       GET /api/v1/products/:id
 // @access      Public
 exports.getProduct = asyncHandler(async (req, res, next) => {
     const product = await Product.findById(req.params.id).populate({
-        path: 'owner',
+        path: 'shop',
         select: 'shop_name shop_address',
     })
 
@@ -35,12 +35,12 @@ exports.getProduct = asyncHandler(async (req, res, next) => {
 // @access      Private
 exports.createProduct = asyncHandler(async (req, res, next) => {
     // Add owner to req.body
-    let owner
+    let shop
     if(req.user.role === 'employee') {
-        owner = req.user.employer
-    } owner = req.user.id
+        shop = req.user.employer
+    } shop = req.user.id
 
-    req.body.owner = owner
+    req.body.shop = shop
 
     const product = await Product.create(req.body)
 

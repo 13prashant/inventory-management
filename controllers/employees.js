@@ -5,14 +5,14 @@ const Employee = require('../models/Employee')
 // @desc        Get all employees
 // @route       GET /api/v1/employees
 // @access      Public
-exports.getEmployees = asyncHandler(async (req, res, next) => {
-    const employees = await Employee.find().populate({
-        path: 'employer',
-        select: 'shop_name shop_address'
-    })
+// exports.getEmployees = asyncHandler(async (req, res, next) => {
+//     const employees = await Employee.find().populate({
+//         path: 'employer',
+//         select: 'shop_name shop_address'
+//     })
 
-    res.status(200).json({ success: true, count: employees.length, data: employees })
-})
+//     res.status(200).json({ success: true, count: employees.length, data: employees })
+// })
 
 // @desc        Get single employee
 // @route       GET /api/v1/employees/:id

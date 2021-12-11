@@ -64,10 +64,20 @@ UserSchema.methods.matchPassword = async function(enteredPassword) {
 }
 
 // Reverse populate with virtuals
+
+// Employees
 UserSchema.virtual('employees', {
     ref: 'Employee',
     localField: '_id',
     foreignField: 'employer',
+    justOne: false
+})
+
+// Products
+UserSchema.virtual('products', {
+    ref: 'Product',
+    localField: '_id',
+    foreignField: 'shop',
     justOne: false
 })
 
